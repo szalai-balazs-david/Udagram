@@ -6,9 +6,5 @@
   {
     "ParameterKey": "NetworkEnvironmentName",
     "ParameterValue": "UdagramNetwork"
-  },
-  {
-    "ParameterKey": "EC2KeyName",
-    "ParameterValue": "UdagramKey"
   }
 ]

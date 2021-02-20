@@ -1,5 +1,7 @@
 Description:
   Balazs Szalai 2021
+  This template deploys a High-Availability Web App using Load Balancers, 
+  AutoScaling Groups and related infrastructure.
 
 Parameters:
 
@@ -11,9 +13,15 @@ Parameters:
     Description: An environment name that was prefixed to network resource names
     Type: String
 
-  EC2KeyName:
-    Description: The name of the EC2 key pair used by the AutoScaling LaunchConfiguration
+  AMI:
+      Description: 'The Machine Image to be used.'
+      Type: String
+      Default: ami-025102f49d03bec05
+
+  InstanceType:
+    Description: WebServer EC2 instance type
     Type: String
+    Default: t3.medium
 
 Resources:
   
@@ -90,12 +98,11 @@ Resources:
           aws s3 cp s3://udacity-demo-1/udacity.zip .
           unzip -o udacity.zip
           systemctl restart apache2.service
-      ImageId: ami-025102f49d03bec05
-      KeyName: !Sub ${EC2KeyName}
+      ImageId: !Ref AMI
       IamInstanceProfile: !Ref ProfileWithRolesForOurApp
       SecurityGroups:
       - Ref: WebServerSecGroup
-      InstanceType: t3.medium
+      InstanceType: !Ref InstanceType
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
         Ebs:
@@ -166,6 +173,6 @@ Outputs:
 
   LoadBalancerUrl: 
     Description: The URL to the Load Balancer
-    Value: !GetAtt WebAppLB.DNSName
+    Value: !Join [ '', [ http://, !GetAtt WebAppLB.DNSName ] ]
     Export:
       Name: !Sub ${EnvironmentName}-LBID
