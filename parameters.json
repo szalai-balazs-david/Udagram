@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "UdagramServers"
+  },
+  {
+    "ParameterKey": "NetworkEnvironmentName",
+    "ParameterValue": "UdagramNetwork"
+  },
+  {
+    "ParameterKey": "EC2KeyName",
+    "ParameterValue": "UdagramKey"
+  }
+]
